@@ -1,66 +1,28 @@
+import { ClientView } from "./components/ClientView";
+import { CompanyView } from "./components/CompanyView";
+import { InvoiceView } from "./components/InvoiceView";
+import { ListItemView } from "./components/ListItemView";
 import { getInovice } from "./services/getInovice";
 
 export const InvoiceApp = () => {
   const { id, name, client, company, items } = getInovice();
-  const { name: nameClient, lastName, address } = client;
-  const { country, city, street, number } = address;
 
   return (
     <>
       <div className="container">
         <div className="card shadow my-3">
           <div className="card-header">Ejemplo Factura</div>
-
           <div className="card-body">
-            <ul className="list-group">
-              <li className="list-group-item">Id: {id}</li>
-              <li className="list-group-item">Name: {name}</li>
-            </ul>
-
+            <InvoiceView id={id} name={name} />
             <div className="row my-3">
               <div className="col">
-                <h3>Datos del cliente</h3>
-                <ul className="list-group">
-                  <li className="list-group-item active">
-                    {nameClient} {lastName}
-                  </li>
-                  <li className="list-group-item">
-                    {country} / {city}
-                  </li>
-                  <li className="list-group-item">
-                    {street} {number}
-                  </li>
-                </ul>
+                <ClientView title="Datos del cliente" client={client} />
               </div>
               <div className="col">
-                <h3>Datos de la empresa</h3>
-                <ul className="list-group">
-                  <li className="list-group-item active">{company.name}</li>
-                  <li className="list-group-item">{company.fiscalNumber}</li>
-                </ul>
+                <CompanyView title="Datos de la empresa" company={company} />
               </div>
             </div>
-            <h4>Productos de la factura</h4>
-            <table className="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>Producto</th>
-                  <th>Precio</th>
-                  <th>Cantidad</th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map(({ id, product, price, quantity }) => {
-                  return (
-                    <tr key={id}>
-                      <td>{product}</td>
-                      <td>{price}</td>
-                      <td>{quantity}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <ListItemView title="Productos de la factura" items={items} />
           </div>
         </div>
       </div>
