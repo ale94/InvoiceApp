@@ -1,8 +1,12 @@
 import PropTypes from "prop-types";
 
 export const ClientView = ({ title, client }) => {
-  const { name: nameClient, lastName, address } = client;
-  const { country, city, street, number } = address;
+  const {
+    name: nameClient,
+    lastName,
+    address: { country, city, street, number },
+  } = client;
+
   return (
     <>
       <h3>{title}</h3>
