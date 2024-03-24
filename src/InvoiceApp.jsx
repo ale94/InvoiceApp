@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ClientView } from "./components/ClientView";
 import { CompanyView } from "./components/CompanyView";
 import { InvoiceView } from "./components/InvoiceView";
@@ -6,19 +6,49 @@ import { ListItemView } from "./components/ListItemView";
 import { TotalView } from "./components/TotalView";
 import { getInovice } from "./services/getInovice";
 
+const invoiceInitital = {
+  total: 0,
+  id: 0,
+  name: "",
+  client: {
+    name: "",
+    lastName: "",
+    address: {
+      country: "",
+      city: "",
+      street: "",
+      number: 0,
+    },
+  },
+  company: {
+    name: "",
+    fiscalNumber: 0,
+  },
+  items: [],
+};
 export const InvoiceApp = () => {
-  const { total, id, name, client, company, items: data } = getInovice();
-
+  const [counter, setCounter] = useState(4);
+  const [invoice, setInvoice] = useState(invoiceInitital);
+  const [items, setItems] = useState([]);
   const [formItemsState, setFormItemsState] = useState({
     product: "",
     price: "",
     quantity: "",
   });
 
+  const { total, id, name, client, company } = invoice;
   const { product, price, quantity } = formItemsState;
 
-  const [items, setItems] = useState(data);
-  const [counter, setCounter] = useState(4);
+  useEffect(() => {
+    const data = getInovice();
+    console.log(invoice);
+    setInvoice(data);
+    setItems(data.items);
+  }, []);
+
+  useEffect(() => {
+    console.log("el precio cambio!");
+  }, [price]);
 
   const onInputChange = ({ target: { name, value } }) => {
     setFormItemsState({
