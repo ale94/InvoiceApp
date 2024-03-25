@@ -4,7 +4,7 @@ import { CompanyView } from "./components/CompanyView";
 import { InvoiceView } from "./components/InvoiceView";
 import { ListItemView } from "./components/ListItemView";
 import { TotalView } from "./components/TotalView";
-import { getInovice } from "./services/getInovice";
+import { getInovice, calculateTotal } from "./services/getInovice";
 
 const invoiceInitital = {
   total: 0,
@@ -27,6 +27,7 @@ const invoiceInitital = {
   items: [],
 };
 export const InvoiceApp = () => {
+  const [total, setTotal] = useState(0);
   const [counter, setCounter] = useState(4);
   const [invoice, setInvoice] = useState(invoiceInitital);
   const [items, setItems] = useState([]);
@@ -36,7 +37,7 @@ export const InvoiceApp = () => {
     quantity: "",
   });
 
-  const { total, id, name, client, company } = invoice;
+  const { id, name, client, company } = invoice;
   const { product, price, quantity } = formItemsState;
 
   useEffect(() => {
@@ -47,8 +48,8 @@ export const InvoiceApp = () => {
   }, []);
 
   useEffect(() => {
-    console.log("el precio cambio!");
-  }, [price]);
+    setTotal(calculateTotal(items));
+  }, [items]);
 
   const onInputChange = ({ target: { name, value } }) => {
     setFormItemsState({
