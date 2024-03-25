@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 export const FormItemsView = ({ handler }) => {
   const [formItemsState, setFormItemsState] = useState({
@@ -74,4 +75,8 @@ export const FormItemsView = ({ handler }) => {
       </form>
     </>
   );
+};
+
+FormItemsView.propTypes = {
+  handler: PropTypes.func.isRequired,
 };
