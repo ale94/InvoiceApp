@@ -25,7 +25,9 @@ export const RowItemView = ({
 };
 
 RowItemView.propTypes = {
+  id: PropTypes.number.isRequired,
   product: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   quantity: PropTypes.number.isRequired,
+  handlerDeleteItem: PropTypes.func.isRequired,
 };

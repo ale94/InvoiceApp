@@ -36,4 +36,5 @@ export const ListItemView = ({ title, items, handlerDeleteItem }) => {
 ListItemView.propTypes = {
   title: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired,
+  handlerDeleteItem: PropTypes.func.isRequired,
 };
